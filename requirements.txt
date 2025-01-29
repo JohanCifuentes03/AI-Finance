@@ -5,7 +5,4 @@ numpy
 gradio
 openai
 python-dotenv
-beautifulsoup4
 requests
-scrapy
-ipython
