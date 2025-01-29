@@ -9,7 +9,7 @@ api_key= os.getenv("OPENAI_API_KEY")
 openai = OpenAI(api_key=api_key)
 
 
-def analyze_investment(summary, news):
+def analyze_investment(summary):
     """
     Utiliza un modelo de lenguaje para analizar si es conveniente invertir basándose en métricas y noticias.
     """
@@ -24,10 +24,6 @@ def analyze_investment(summary, news):
     - Mínimo: {summary['Mínimo']}
     - Máximo: {summary['Máximo']}
     - Precio actual: {summary['Precio actual']}
-
-    Noticias relevantes:
-    {news}
-
     """
 
     response = openai.chat.completions.create(
