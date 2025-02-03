@@ -3,31 +3,35 @@ import gradio as gr
 from dotenv import load_dotenv
 from market_data import process_market_data, get_summary
 from plot_utils import plot_normal_distribution
-from chatbot import analyze_investment
+from chatbot import analyze_investment, summarize_market_news
+from news import get_news  # Importar la función que obtiene las noticias
 
-# Load environment variables
+# Cargar variables de entorno
 load_dotenv()
 
 def market_analysis(ticker, start_date, end_date):
     try:
-        # Get market data and calculate metrics
+        # Obtener datos del mercado y calcular métricas
         market_data = process_market_data(ticker, start_date, end_date)
         summary = get_summary(market_data)
 
-        # Plot normal distribution
+        # Obtener y resumir noticias del mercado
+        news_data = get_news(ticker, 20)  # Llamada a la API de noticias
+        summarized_news = summarize_market_news(news_data)  # Resumir noticias con IA
+
+        # Graficar la distribución normal
         graph_path = plot_normal_distribution(market_data)
 
-        # Analyze investment opportunity using OpenAI
-        ai_recommendation = analyze_investment(summary)
+        # Analizar inversión con IA
+        ai_recommendation = analyze_investment(summarized_news, summary)
 
-        # Prepare results
+        # Preparar resultados
         summary_text = "\n".join([f"{key}: {value}" for key, value in summary.items()])
         return summary_text, ai_recommendation, graph_path
 
     except Exception as e:
         return f"Error: {str(e)}", None, None
 
-# Create Gradio interface with improved styling
 css = """
 .gradio-container {
     font-family: 'Arial', sans-serif;
@@ -43,6 +47,7 @@ css = """
 }
 """
 
+# Crear la interfaz Gradio
 interface = gr.Interface(
     fn=market_analysis,
     inputs=[

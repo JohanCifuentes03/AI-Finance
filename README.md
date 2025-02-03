@@ -19,10 +19,10 @@ A powerful market analysis tool that combines technical analysis with AI-powered
 ```
 ai-market-analyzer/
 ├── app/
-│   ├── __init__.py
 │   ├── market_data.py
 │   ├── plot_utils.py
 │   ├── chatbot.py
+│   ├── news.py
 │   └── app.py
 ├── requirements.txt
 ├── .env.example
@@ -51,8 +51,8 @@ cd ai-market-analyzer
 
 2. Create and activate a virtual environment:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python -m venv env
+source env/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 3. Install dependencies:
@@ -85,7 +85,7 @@ The application will be available at `http://localhost:7860`
 3. Specify the date range for analysis
 4. Click "Submit" to get your analysis
 
-## API Reference 📚
+## **API Reference 📚**
 
 ### Market Data Module
 - `process_market_data(ticker, start_date, end_date)`: Fetches and processes market data
@@ -95,7 +95,11 @@ The application will be available at `http://localhost:7860`
 - `plot_normal_distribution(market_data)`: Generates distribution visualization
 
 ### Chatbot Module
-- `analyze_investment(summary)`: Generates AI-powered investment recommendations
+- `summarize_market_news(news)`: Summarizes market news using AI
+- `analyze_investment(summary, news)`: Generates AI-powered investment recommendations based on market data and news
+
+### News Module
+- `get_news(tickers, max_news=5, max_chars=2000)`: Fetches the latest market news, limiting results and characters
 
 ## Contributing 🤝
 
